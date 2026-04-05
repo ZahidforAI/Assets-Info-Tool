@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="AI-powered real-time market insights for Crypto, Stocks, and Forex. Live prices, breaking news, and professional AI analysis reports.">
+  <title>AI Market Insights — Live Crypto, Stock & Forex Analysis</title>
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📊</text></svg>">
+</head>
+<body>
+
+  <div class="app-shell">
+    <!-- ── Top Navigation ── -->
+    <nav class="topnav">
+      <a class="topnav__brand" id="nav-home">
+        <div class="topnav__logo">AI</div>
+        <div class="topnav__name">Market<span>Insights</span></div>
+      </a>
+      <div class="topnav__actions">
+        <div class="temp-control">
+          <span class="temp-control__label">AI Temp</span>
+          <input type="range" class="temp-control__slider" id="temp-slider" min="0" max="1" step="0.1" value="0.7">
+          <span class="temp-control__value" id="temp-val">0.7</span>
+        </div>
+        <div class="topnav__status">
+          <span class="topnav__status-dot"></span>
+          Live
+        </div>
+      </div>
+    </nav>
+
+    <!-- ── Main Content ── -->
+    <div class="main-container">
+
+      <!-- ═══ STEP 1: Category Selection ═══ -->
+      <section id="view-categories">
+        <div class="hero">
+          <div class="hero__badge">⚡ Real-Time Market Data</div>
+          <h1 class="hero__title">
+            <span class="gradient-text">Analyze Any Asset</span><br>
+            with AI Intelligence
+          </h1>
+          <p class="hero__desc">
+            Get live prices, 24-hour breaking news, and professional AI-powered research reports for crypto, stocks, and forex markets.
+          </p>
+        </div>
+        <div class="cat-grid" id="cat-grid">
+          <!-- Rendered by JS -->
+        </div>
+      </section>
+
+      <!-- ═══ STEP 2: Asset Table ═══ -->
+      <section id="view-assets" class="hidden asset-table-section">
+        <div class="page-header">
+          <div class="page-header__breadcrumb">
+            <a id="bc-home">Markets</a>
+            <span class="sep">›</span>
+            <span id="bc-category">Crypto</span>
+          </div>
+          <h1 class="page-header__title" id="assets-title">Cryptocurrencies</h1>
+          <p class="page-header__subtitle" id="assets-subtitle">Select an asset to generate a full AI research report</p>
+        </div>
+        <div class="stats-bar" id="stats-bar"></div>
+        <table class="asset-table" id="asset-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Asset</th>
+              <th>Type</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="asset-tbody"></tbody>
+        </table>
+      </section>
+
+      <!-- ═══ STEP 3: Report Dashboard ═══ -->
+      <section id="view-report" class="hidden report-dashboard">
+        <div class="page-header">
+          <div class="page-header__breadcrumb">
+            <a id="rbc-home">Markets</a>
+            <span class="sep">›</span>
+            <a id="rbc-category">Crypto</a>
+            <span class="sep">›</span>
+            <span id="rbc-asset">BTC</span>
+          </div>
+        </div>
+
+        <!-- Asset Header -->
+        <div class="asset-header" id="report-asset-header"></div>
+
+        <!-- Price -->
+        <div class="price-hero" id="report-price-hero">
+          <div class="price-hero__label">Current Price</div>
+          <div class="price-hero__value" id="rpt-price">—</div>
+          <div class="price-hero__pair" id="rpt-pair"></div>
+        </div>
+
+        <!-- Report Cards -->
+        <div class="report-grid" id="report-grid">
+          <!-- Filled by JS from structured API response -->
+        </div>
+      </section>
+
+    </div>
+  </div>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>
