@@ -150,6 +150,7 @@ let state = { category: null, temperature: 0.7 };
 /* ─── User Preferences (persisted to localStorage) ─── */
 const PREFS_KEY = "ai_market_user_prefs";
 const DEFAULT_PREFS = { displayName: "", temperature: 0.7, defaultCategory: "" };
+const NAV_NAME_MAX = 12;
 
 function loadPrefs() {
   try {
@@ -233,7 +234,7 @@ function updateNavProfile(displayName) {
   const nameEl = $("#settings-display-name");
   const avatarEl = $("#settings-avatar");
   const label = displayName && displayName.trim() ? displayName.trim() : "Profile";
-  nameEl.textContent = label.length > 12 ? label.slice(0, 12) + "…" : label;
+  nameEl.textContent = label.length > NAV_NAME_MAX ? label.slice(0, NAV_NAME_MAX) + "…" : label;
   if (avatarEl) {
     avatarEl.textContent = label !== "Profile" ? label.charAt(0).toUpperCase() : "U";
   }
@@ -253,7 +254,6 @@ function bindSettings() {
   btn.addEventListener("click", () => {
     populateSettingsForm();
     overlay.classList.remove("hidden");
-    overlay.classList.add("visible");
     $("#pref-name").focus();
   });
 
