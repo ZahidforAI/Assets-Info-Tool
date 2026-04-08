@@ -1010,4 +1010,260 @@ body::after {
   .asset-table tbody td:nth-child(3) { display: none; }
   .hero { padding: 2rem 0 1.5rem; }
   .hero__title { font-size: 1.6rem; }
+  .settings-btn__name { display: none; }
+}
+
+/* ════════════════════════════════════
+   Settings Button (nav)
+   ════════════════════════════════════ */
+.settings-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  background: var(--bg-surface-1);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-sm);
+  padding: 0.35rem 0.7rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: color var(--t-fast), border-color var(--t-fast), background var(--t-fast);
+}
+
+.settings-btn:hover {
+  color: var(--text-primary);
+  border-color: var(--glass-border-hover);
+  background: var(--bg-surface-2);
+}
+
+.settings-btn__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+}
+
+.settings-btn__name {
+  max-width: 100px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ════════════════════════════════════
+   Settings Modal Overlay
+   ════════════════════════════════════ */
+.settings-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(4px);
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeIn 0.2s var(--ease-out);
+}
+
+.settings-overlay.hidden { display: none; }
+
+/* ── Settings Panel ── */
+.settings-panel {
+  background: var(--bg-surface-1);
+  border: 1px solid var(--glass-border-hover);
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 440px;
+  box-shadow: var(--shadow-elevated);
+  animation: fadeInUp 0.25s var(--ease-out);
+  overflow: hidden;
+}
+
+.settings-panel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem 1rem;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.settings-panel__title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.settings-panel__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--blue));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--bg-body);
+  flex-shrink: 0;
+}
+
+.settings-panel__title {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-primary);
+}
+
+.settings-panel__subtitle {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 0.1rem;
+}
+
+.settings-panel__close {
+  background: none;
+  border: none;
+  color: var(--text-tertiary);
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 0.3rem 0.5rem;
+  border-radius: var(--r-sm);
+  transition: color var(--t-fast), background var(--t-fast);
+  line-height: 1;
+}
+
+.settings-panel__close:hover {
+  color: var(--text-primary);
+  background: var(--bg-hover);
+}
+
+.settings-panel__body {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* ── Settings Sections ── */
+.settings-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.settings-section__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-tertiary);
+}
+
+/* ── Settings Fields ── */
+.settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.settings-field__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.settings-field__input,
+.settings-field__select {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  padding: 0.55rem 0.85rem;
+  color: var(--text-primary);
+  font-family: inherit;
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color var(--t-fast);
+  width: 100%;
+}
+
+.settings-field__input:focus,
+.settings-field__select:focus {
+  border-color: var(--accent);
+}
+
+.settings-field__select option {
+  background: var(--bg-surface-2);
+}
+
+.settings-field__hint {
+  font-size: 0.72rem;
+  color: var(--text-disabled);
+}
+
+/* ── Settings Temperature Row ── */
+.settings-temp-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.settings-temp-slider {
+  flex: 1;
+  width: auto;
+}
+
+.settings-temp-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  min-width: 2rem;
+  text-align: right;
+}
+
+/* ── Settings Footer ── */
+.settings-panel__footer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 1.5rem 1.25rem;
+  border-top: 1px solid var(--glass-border);
+}
+
+.settings-btn-save {
+  flex: 1;
+  padding: 0.6rem 1.2rem;
+  background: var(--accent);
+  border: none;
+  border-radius: var(--r-md);
+  color: var(--bg-body);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--t-fast), transform var(--t-fast);
+}
+
+.settings-btn-save:hover {
+  background: var(--accent-hover);
+  transform: translateY(-1px);
+}
+
+.settings-btn-reset {
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: 1px solid var(--glass-border);
+  border-radius: var(--r-md);
+  color: var(--text-tertiary);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  transition: color var(--t-fast), border-color var(--t-fast);
+}
+
+.settings-btn-reset:hover {
+  color: var(--red);
+  border-color: var(--red);
 }
