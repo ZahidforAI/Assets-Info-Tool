@@ -27,8 +27,72 @@
           <span class="topnav__status-dot"></span>
           Live
         </div>
+        <button class="settings-btn" id="settings-btn" title="User Settings" aria-label="Open user settings">
+          <svg class="settings-btn__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+          <span class="settings-btn__name" id="settings-display-name">Profile</span>
+        </button>
       </div>
     </nav>
+
+    <!-- ── Settings Modal ── -->
+    <div class="settings-overlay hidden" id="settings-overlay" role="dialog" aria-modal="true" aria-labelledby="settings-title">
+      <div class="settings-panel">
+        <div class="settings-panel__header">
+          <div class="settings-panel__title-wrap">
+            <div class="settings-panel__avatar" id="settings-avatar">T</div>
+            <div>
+              <h2 class="settings-panel__title" id="settings-title">User Settings</h2>
+              <p class="settings-panel__subtitle">Customize your profile &amp; preferences</p>
+            </div>
+          </div>
+          <button class="settings-panel__close" id="settings-close" aria-label="Close settings">✕</button>
+        </div>
+        <div class="settings-panel__body">
+
+          <!-- Profile Section -->
+          <div class="settings-section">
+            <div class="settings-section__label">Profile</div>
+            <div class="settings-field">
+              <label class="settings-field__label" for="pref-name">Display Name</label>
+              <input class="settings-field__input" type="text" id="pref-name" maxlength="24" placeholder="Enter your name…">
+              <span class="settings-field__hint">Shown in the navigation bar</span>
+            </div>
+          </div>
+
+          <!-- Analysis Preferences Section -->
+          <div class="settings-section">
+            <div class="settings-section__label">Analysis Preferences</div>
+            <div class="settings-field">
+              <label class="settings-field__label" for="pref-temperature">Default AI Temperature</label>
+              <div class="settings-temp-row">
+                <input class="temp-control__slider settings-temp-slider" type="range" id="pref-temperature" min="0" max="1" step="0.1" value="0.7">
+                <span class="settings-temp-value" id="pref-temperature-val">0.7</span>
+              </div>
+              <span class="settings-field__hint">Lower = more focused, Higher = more creative</span>
+            </div>
+            <div class="settings-field">
+              <label class="settings-field__label" for="pref-category">Default Category</label>
+              <select class="settings-field__select" id="pref-category">
+                <option value="">— Start from home —</option>
+                <option value="Crypto">🪙 Cryptocurrencies</option>
+                <option value="Stocks">📈 Stocks</option>
+                <option value="Forex">💱 Forex</option>
+                <option value="Commodities">🏆 Commodities</option>
+              </select>
+              <span class="settings-field__hint">Category opened automatically on launch</span>
+            </div>
+          </div>
+
+        </div>
+        <div class="settings-panel__footer">
+          <button class="settings-btn-save" id="settings-save">Save Settings</button>
+          <button class="settings-btn-reset" id="settings-reset">Reset to Defaults</button>
+        </div>
+      </div>
+    </div>
 
     <!-- ── Main Content ── -->
     <div class="main-container">

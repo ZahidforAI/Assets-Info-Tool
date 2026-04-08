@@ -147,6 +147,23 @@ const CAT_META = {
 /* ─── State ─── */
 let state = { category: null, temperature: 0.7 };
 
+/* ─── User Preferences (persisted to localStorage) ─── */
+const PREFS_KEY = "ai_market_user_prefs";
+const DEFAULT_PREFS = { displayName: "", temperature: 0.7, defaultCategory: "" };
+
+function loadPrefs() {
+  try {
+    const raw = localStorage.getItem(PREFS_KEY);
+    return raw ? { ...DEFAULT_PREFS, ...JSON.parse(raw) } : { ...DEFAULT_PREFS };
+  } catch {
+    return { ...DEFAULT_PREFS };
+  }
+}
+
+function savePrefs(prefs) {
+  localStorage.setItem(PREFS_KEY, JSON.stringify(prefs));
+}
+
 /* ─── DOM ─── */
 const $ = (s) => document.querySelector(s);
 const $$ = (s) => document.querySelectorAll(s);
@@ -162,6 +179,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderCategories();
   bindNavigation();
   bindTemperature();
+  bindSettings();
+  applyPrefs();
 });
 
 /* ─── Navigation helpers ─── */
@@ -188,6 +207,122 @@ function bindTemperature() {
     state.temperature = parseFloat(slider.value);
     val.textContent = state.temperature.toFixed(1);
   });
+}
+
+/* ─── Apply saved preferences on load ─── */
+function applyPrefs() {
+  const prefs = loadPrefs();
+
+  // Apply default temperature
+  state.temperature = prefs.temperature;
+  const slider = $("#temp-slider");
+  const val = $("#temp-val");
+  slider.value = prefs.temperature;
+  val.textContent = prefs.temperature.toFixed(1);
+
+  // Update nav display name & avatar
+  updateNavProfile(prefs.displayName);
+
+  // Navigate to default category if set
+  if (prefs.defaultCategory && ASSETS[prefs.defaultCategory]) {
+    selectCategory(prefs.defaultCategory);
+  }
+}
+
+function updateNavProfile(displayName) {
+  const nameEl = $("#settings-display-name");
+  const avatarEl = $("#settings-avatar");
+  const label = displayName && displayName.trim() ? displayName.trim() : "Profile";
+  nameEl.textContent = label.length > 12 ? label.slice(0, 12) + "…" : label;
+  if (avatarEl) {
+    avatarEl.textContent = label !== "Profile" ? label.charAt(0).toUpperCase() : "U";
+  }
+}
+
+/* ─── Settings Modal ─── */
+function bindSettings() {
+  const btn = $("#settings-btn");
+  const overlay = $("#settings-overlay");
+  const closeBtn = $("#settings-close");
+  const saveBtn = $("#settings-save");
+  const resetBtn = $("#settings-reset");
+  const prefTempSlider = $("#pref-temperature");
+  const prefTempVal = $("#pref-temperature-val");
+
+  // Open modal
+  btn.addEventListener("click", () => {
+    populateSettingsForm();
+    overlay.classList.remove("hidden");
+    overlay.classList.add("visible");
+    $("#pref-name").focus();
+  });
+
+  // Close on overlay backdrop click
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeSettings();
+  });
+
+  // Close button
+  closeBtn.addEventListener("click", closeSettings);
+
+  // Escape key closes modal
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !overlay.classList.contains("hidden")) closeSettings();
+  });
+
+  // Live preview temperature value
+  prefTempSlider.addEventListener("input", () => {
+    prefTempVal.textContent = parseFloat(prefTempSlider.value).toFixed(1);
+  });
+
+  // Save
+  saveBtn.addEventListener("click", () => {
+    const prefs = {
+      displayName: $("#pref-name").value.trim(),
+      temperature: parseFloat(prefTempSlider.value),
+      defaultCategory: $("#pref-category").value,
+    };
+    savePrefs(prefs);
+    applySettingsToState(prefs);
+    closeSettings();
+    showToast("✅ Settings saved");
+  });
+
+  // Reset
+  resetBtn.addEventListener("click", () => {
+    savePrefs({ ...DEFAULT_PREFS });
+    populateSettingsForm({ ...DEFAULT_PREFS });
+    applySettingsToState({ ...DEFAULT_PREFS });
+    closeSettings();
+    showToast("Settings reset to defaults");
+  });
+}
+
+function populateSettingsForm(prefs) {
+  const p = prefs || loadPrefs();
+  $("#pref-name").value = p.displayName || "";
+  const tempSlider = $("#pref-temperature");
+  const tempVal = $("#pref-temperature-val");
+  tempSlider.value = p.temperature;
+  tempVal.textContent = parseFloat(p.temperature).toFixed(1);
+  $("#pref-category").value = p.defaultCategory || "";
+}
+
+function applySettingsToState(prefs) {
+  // Update active temperature slider and state
+  state.temperature = prefs.temperature;
+  const slider = $("#temp-slider");
+  const val = $("#temp-val");
+  slider.value = prefs.temperature;
+  val.textContent = prefs.temperature.toFixed(1);
+  // Update nav display name
+  updateNavProfile(prefs.displayName);
+}
+
+function closeSettings() {
+  const overlay = $("#settings-overlay");
+  overlay.classList.remove("visible");
+  overlay.classList.add("hidden");
 }
 
 /* ════════════════════════════════════
